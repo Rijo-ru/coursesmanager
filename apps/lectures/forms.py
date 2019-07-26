@@ -7,11 +7,13 @@ from teachers.models import Teacher
 
 class LectureAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
+        """Смотрим что студент зачислен на курс и не выбыл с курса или уже был отмечен на лекции"""
         super().__init__(*args, **kwargs)
         if self.initial:
             self.fields['register_students'].queryset = Student.objects.filter(
                 Q(courses__in=[self.instance.course]),
-                ~Q(dropped_out_from_course__in=[self.instance.course]) | Q(attended_lectures__lecture__in=[self.instance])
+                ~Q(dropped_out_from_course__in=[self.instance.course])
+                | Q(attended_lectures__lecture__in=[self.instance])
             )
             self.fields['dropped_out_students'].queryset = Student.objects.filter(
                 Q(lectures__in=[self.instance])
@@ -35,18 +37,15 @@ class LectureAdminForm(forms.ModelForm):
             self.fields['register_students'].queryset = Student.objects.filter(
                 Q(courses__in=[cleaned_data]),
                 ~Q(dropped_out_from_course__in=[cleaned_data]))
-            self.fields['teachers'].queryset = Teacher.objects.filter(
-                Q(courses__in=[cleaned_data])
-            )
         else:
             self.fields['register_students'].queryset = Student.objects.filter(
                 Q(courses__in=[cleaned_data]),
                 ~Q(dropped_out_from_course__in=[cleaned_data]) | Q(
                     attended_lectures__lecture__in=[self.instance])
             )
-            self.fields['teachers'].queryset = Teacher.objects.filter(
-                Q(courses__in=[cleaned_data])
-            )
+        self.fields['teachers'].queryset = Teacher.objects.filter(
+            Q(courses__in=[cleaned_data])
+        )
         return cleaned_data
 
     def clean_register_students(self):

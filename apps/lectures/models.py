@@ -62,6 +62,7 @@ class Lecture(models.Model):
 
 
 class AttendanceLecture(models.Model):
+    """Модель записи отметки студента на лекцию"""
     lecture = models.ForeignKey(
         Lecture,
         related_name='marked_students',

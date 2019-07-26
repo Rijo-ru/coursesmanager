@@ -17,6 +17,7 @@ from students.models import Student
 
 
 class AttendanceLectureView(View):
+    """Обрабатываем данные страницы 'Добро пожаловать на лекцию'"""
     template = 'student_check.html'
     template_cookie = 'student_check_identity.html'
 
@@ -110,6 +111,7 @@ class AttendanceLectureView(View):
 
 
 class AttendanceLectureNotMe(View):
+    """Если студент выбирает 'не я'"""
 
     @method_decorator(csrf_protect)
     def post(self, request, token, *args, **kwargs):
@@ -144,6 +146,7 @@ class AttendanceLectureNotMe(View):
 
 
 class LectureView(View):
+    """Генерируем страницу с QR кодом"""
     template = 'qr_index.html'
 
     @method_decorator(login_required)

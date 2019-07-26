@@ -71,40 +71,39 @@ document.addEventListener('DOMContentLoaded', () => {
         let elem = django.jQuery('#id_course');
         if (elem.val() !== elem.data('previousValue')) {
 
-        clearSelectBox('id_register_students_from');
-        clearSelectBox('id_register_students_to');
+            clearSelectBox('id_register_students_from');
+            clearSelectBox('id_register_students_to');
 
-        clearSelectBox('id_dropped_out_students_from');
-        clearSelectBox('id_dropped_out_students_to');
+            clearSelectBox('id_dropped_out_students_from');
+            clearSelectBox('id_dropped_out_students_to');
 
-        clearSelectBox('id_teachers_from');
-        clearSelectBox('id_teachers_to');
+            clearSelectBox('id_teachers_from');
+            clearSelectBox('id_teachers_to');
 
-        django.jQuery.ajax({
-            type: 'POST',
-            url: '/api/students/',
-            data: {'course': elem.val()}
-        }).done((data) => {
-            console.log(data);
-            data.map((elem) => {
-                SelectBox.add_to_cache('id_register_students_from', {value: String(elem.id), text: elem.name, displayed: 1});
+            django.jQuery.ajax({
+                type: 'POST',
+                url: '/api/students/',
+                data: {'course': elem.val()}
+            }).done((data) => {
+                data.map((elem) => {
+                    SelectBox.add_to_cache('id_register_students_from', {value: String(elem.id), text: elem.name, displayed: 1});
+                });
+            SelectBox.redisplay('id_register_students_from');
+            SelectFilter.refresh_icons('id_register_students');
             });
-        SelectBox.redisplay('id_register_students_from');
-        SelectFilter.refresh_icons('id_register_students');
-        });
 
-        django.jQuery.ajax({
-            type: 'POST',
-            url: '/api/teachers/',
-            data: {'course': elem.val()}
-        }).done((data) => {
-            console.log(data);
-            data.map((elem) => {
-                SelectBox.add_to_cache('id_teachers_from', {value: String(elem.id), text: elem.name, displayed: 1});
+            django.jQuery.ajax({
+                type: 'POST',
+                url: '/api/teachers/',
+                data: {'course': elem.val()}
+            }).done((data) => {
+                data.map((elem) => {
+                    SelectBox.add_to_cache('id_teachers_from', {value: String(elem.id), text: elem.name, displayed: 1});
+                });
+            SelectBox.redisplay('id_teachers_from');
+            SelectFilter.refresh_icons('id_teachers');
             });
-        SelectBox.redisplay('id_teachers_from');
-        SelectFilter.refresh_icons('id_teachers');
-        });
+            django.jQuery('#id_course').data('previousValue', elem.val());
 
         }
     });

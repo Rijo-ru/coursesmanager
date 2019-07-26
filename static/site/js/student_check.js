@@ -107,11 +107,9 @@ $(window).on('load',function(){
                         search: params.term,
                         page: params.page || 1
                     };
-                    console.log(query);
                     return query;
                 },
                 processResults: (data) => {
-                    console.log(data);
                     return {results: data.items.map((elem) => {
                         let key = Object.keys(elem)[0];
                         return {id: key, text: elem[key]};
@@ -180,7 +178,6 @@ $(window).on('load',function(){
                     url: document.URL,
                     data: data,
                     success: (data) => {
-                        console.log(data);
                         $('.modal').modal('hide');
                         $('#success-main').show();
                     },
@@ -211,7 +208,6 @@ $(window).on('load',function(){
                     url: document.URL,
                     data: data,
                     success: (data) => {
-                        console.log(data);
                         $('.modal').modal('hide');
                         $('#success-main').show();
                     },
