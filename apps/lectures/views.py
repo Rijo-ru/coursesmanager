@@ -12,6 +12,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.utils.decorators import method_decorator
 
+from django.utils import timezone
+
 from lectures.models import Lecture, AttendanceLecture
 from students.models import Student
 
@@ -26,6 +28,11 @@ class AttendanceLectureView(View):
             lecture = Lecture.objects.get(link_token=token)
         except Lecture.DoesNotExist:
             raise Http404()
+        # Лекция будет доступна за 30 минут до начала, и 10 минут после окончания
+        if not 1800 >= (lecture.date_start - timezone.now()).total_seconds() >= -(
+                lecture.duration.hour * 60 * 60 + lecture.duration.minute * 60 + lecture.duration.second + 600):
+            raise Http404()
+
         context = dict()
         context['link_token'] = token
         context['lecture_name'] = lecture.name
@@ -59,6 +66,11 @@ class AttendanceLectureView(View):
             lecture = Lecture.objects.get(link_token=token)
         except Lecture.DoesNotExist:
             raise Http404()
+        # Лекция будет доступна за 30 минут до начала, и 10 минут после окончания
+        if not 1800 >= (lecture.date_start - timezone.now()).total_seconds() >= -(
+                lecture.duration.hour * 60 * 60 + lecture.duration.minute * 60 + lecture.duration.second + 600):
+            raise Http404()
+
         phone = request.POST.get('phone_number', None)
         student_id = request.POST.get('student_id', None)
         if phone:
@@ -119,6 +131,11 @@ class AttendanceLectureNotMe(View):
             lecture = Lecture.objects.get(link_token=token)
         except Lecture.DoesNotExist:
             raise Http404()
+        # Лекция будет доступна за 30 минут до начала, и 10 минут после окончания
+        if not 1800 >= (lecture.date_start - timezone.now()).total_seconds() >= -(
+                lecture.duration.hour * 60 * 60 + lecture.duration.minute * 60 + lecture.duration.second + 600):
+            raise Http404()
+
         identity = request.COOKIES.get('identity', None)
         if identity:
             try:

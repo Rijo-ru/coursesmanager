@@ -19,6 +19,7 @@ class Lecture(models.Model):
     description = models.TextField('Описание', blank=True, null=True)
 
     date_start = models.DateTimeField('Дата/Время начала')
+    duration = models.TimeField('Продолжительность лекции')
 
     teachers = models.ManyToManyField(
         Teacher,

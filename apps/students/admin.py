@@ -7,4 +7,5 @@ from students.forms import StudentAdminForm
 class StudentAdmin(admin.ModelAdmin):
     list_filter = ['courses__name']
     exclude = ('identity_token', 'full_name')
+    search_fields = ['full_name']
     form = StudentAdminForm

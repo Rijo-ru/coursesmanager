@@ -20,3 +20,13 @@ class CourseAdminForm(forms.ModelForm):
             Q(courses__in=[self.instance]) | Q(pk__in=cleaned_data)
         )
         return cleaned_data
+
+    def clean_expiration_date(self):
+        expiration_date = self.cleaned_data['expiration_date']
+        date_start = self.cleaned_data['date_start']
+        if expiration_date < date_start:
+            raise forms.ValidationError(
+                f'Дата окончания курса должна быть позже даты начала '
+                f'({date_start.strftime("%d.%m.%Y")}).'
+            )
+        return expiration_date

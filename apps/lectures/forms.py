@@ -58,9 +58,15 @@ class LectureAdminForm(forms.ModelForm):
     def clean_date_start(self):
         data = self.cleaned_data['date_start']
         course_date_start = self.cleaned_data['course'].date_start
+        expiration_date = self.cleaned_data['course'].expiration_date
         if course_date_start > data.date():
             raise forms.ValidationError(
-                f'Дата лекции, должна быть не раньше начала курса '
+                f'Дата лекции, должна быть не раньше даты начала курса '
                 f'({course_date_start.strftime("%d.%m.%Y")}).'
+            )
+        if expiration_date < data.date():
+            raise forms.ValidationError(
+                f'Дата лекции, должна быть не позже даты окончания курса '
+                f'({expiration_date.strftime("%d.%m.%Y")}).'
             )
         return data
