@@ -1003,7 +1003,7 @@ students = [
     ('Яценко', 'Ярослав', '', '9240001000')
 ]
 
-for name, surname, last_name, phone_number in students:
+for surname, name, last_name, phone_number in students:
     Student.objects.create(
         name=name,
         surname=surname,
