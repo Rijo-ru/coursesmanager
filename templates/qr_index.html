@@ -1,0 +1,61 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href='{% static "css/bootstrap.min.css" %}' rel="stylesheet">
+    <link href='{% static "css/qr_index.css" %}' rel="stylesheet">
+    <title>Лекция "{{lecture_name}}"</title>
+    <script type="text/javascript" src='{% static "js/jquery-3.4.1.min.js" %}'></script>
+    <script type="text/javascript" src='{% static "js/popper.min.js" %}'></script>
+    <script type="text/javascript" src='{% static "js/bootstrap.min.js" %}'></script>
+    <script type="text/javascript" src='{% static "js/require.js" %}'></script>
+    <script type="text/javascript">
+        var __awesome_qr_base_path = "{% static "js/awesome-qr.min.js" %}".replace('/awesome-qr.min.js', '');
+        var link_img_ok = "{% static "img/ok.png" %}";
+        var link_img_cancel = "{% static "img/cancel.png" %}";
+        var student_check_link = window.location.protocol + '//' + window.location.host + "{% url 'check' token %}";
+        var ws_link = 'ws://' + window.location.host + '/ws/lecture/{{token}}/';
+        var logo_img = "{% static "img/logo.jpg" %}";
+    </script>
+    <script type="text/javascript" src='{% static "js/qr_index.js" %}'></script>
+</head>
+<body>
+<div class="progress" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{count_marked_students}}" aria-valuemin="0" aria-valuemax="{{count_students}}" style="width: {% widthratio count_marked_students count_students 100 %}%;"></div>
+    <span class="progress-bar-text">{{count_marked_students}} из {{count_students}}</span>
+</div>
+    <div class="wrap">
+        <div class="float-left">
+            <img class="rounded mx-auto d-block" id="qrcode"/>
+        </div>
+        <div class="float-left">
+            <div class="wrap2">
+                <div class="table-wrap">
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Студент</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in students %}
+                            <tr data-user="{{student.id}}">
+                                <th scope="row"><img class="status"
+                                {% if student in marked_students %}
+                                src="{% static 'img/ok.png' %}"
+                                {% else %}
+                                src="{% static 'img/cancel.png' %}"
+                                {% endif %}
+                                ></th>
+                                <td>{{student.incognito_name}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

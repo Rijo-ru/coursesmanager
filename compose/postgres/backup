@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -o errexit
+set -o nounset
+
+export PGPASSWORD=${DATABASE_PASSWORD}
+
+echo "Создаем backup базы данных"
+
+BACKUP=backup.sql.gz
+if [ -f $BACKUP ]; then
+  rm /backups/$BACKUP
+fi
+
+pg_dump -h 127.0.0.1 -U ${DATABASE_USER} ${DATABASE_NAME} | gzip > /backups/$BACKUP
+
+echo "Бэкап базы данных создан успешно $BACKUP"

@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -o errexit
+set -o nounset
+
+export PYTHONPATH=${PYTHONPATH}:/project/CoursesManager
+
+python manage.py collectstatic --noinput
+python manage.py migrate --noinput
+
+chmod ugo+wr -R /project/CoursesManager/static
+chmod ugo+wr -R /project/CoursesManager/templates
+
+/usr/local/bin/gunicorn -c gunicorn.conf.py core.wsgi

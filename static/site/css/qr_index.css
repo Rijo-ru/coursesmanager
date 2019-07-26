@@ -1,0 +1,84 @@
+body{
+    background:#f8f9fa;
+}
+#qrcode {
+    cursor: pointer;
+    width: 800px;
+    height: 800px;
+}
+.table th{
+    border-top: none;
+}
+.table {
+    padding-top: 18px;
+}
+.status{
+    width:24px;
+    height:24px;
+}
+.wrap{
+    padding: 20px 50px 0 50px;
+}
+.float-left{
+    padding-left: 10px;
+}
+.progress {
+    height: 10px;
+    font-size: 0rem;
+    margin-bottom:10px;
+    background-color: #dedede;
+    -moz-transition: height 0.7s ease;
+    -webkit-transition: height 0.7s ease;
+    -o-transition: height 0.7s ease;
+    transition: height 0.7s ease;
+}
+.progress:hover {
+    height: 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: auto;
+    font-style: oblique;
+    font-stretch: unset;
+    letter-spacing: 3px;
+    line-height: 2rem;
+}
+
+.progress-bar-text:hover {
+    opacity: 1;
+}
+
+.progress-bar-text {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    opacity: 0;
+    -moz-transition: opacity 1s ease;
+    -webkit-transition: opacity 1s  ease;
+    -o-transition: opacity 1s  ease;
+    transition: opacity 1s ease;
+}
+
+
+.float-left {
+    margin-bottom: 10px;
+}
+.wrap2 {
+    width: 400px;
+    height: 800px;
+    max-height: 800px;
+    overflow: hidden;
+}
+.table-wrap {
+    max-height:100%;
+    overflow: hidden;
+}
+.table-wrap {
+    overflow-y: auto; height: 800px;
+}
+.table-wrap thead th{
+  position: sticky; top: 0;
+}
+.table-wrap::-webkit-scrollbar{
+    width: 0;
+    height: 0;
+}

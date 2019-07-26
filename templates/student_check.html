@@ -1,0 +1,102 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Лекция "{{lecture_name}}"</title>
+    {% csrf_token %}
+    <link href='{% static "css/bootstrap.min.css" %}' rel="stylesheet">
+    <link href='{% static "css/select2.min.css" %}' rel="stylesheet">
+    <link href='{% static "css/student_check.css" %}' rel="stylesheet">
+    <script type="text/javascript" src='{% static "js/jquery-3.4.1.min.js" %}'></script>
+    <script type="text/javascript" src='{% static "js/jquery.mask.js" %}'></script>
+    <script type="text/javascript" src='{% static "js/popper.min.js" %}'></script>
+    <script type="text/javascript" src='{% static "js/bootstrap.min.js" %}'></script>
+    <script type="text/javascript" src='{% static "js/select2.min.js" %}'></script>
+    <script type="text/javascript" src='{% static "js/student_check.js" %}'></script>
+    <script>var link_token = '{{link_token}}';</script>
+</head>
+<body>
+    <div class="container h-100">
+        <div class="row h-100 justify-content-center align-items-center">
+            <div id="success-main" class="d-flex justify-content-center" style="display:none!important;">
+                <div class="svg-box">
+                    <svg class="circular green-stroke">
+                        <circle class="path" cx="75" cy="75" r="50" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                    </svg>
+                    <svg class="checkmark green-stroke">
+                        <g transform="matrix(0.79961,8.65821e-32,8.39584e-32,0.79961,-489.57,-205.679)">
+                            <path class="checkmark__check" fill="none" d="M616.306,283.025L634.087,300.805L673.361,261.53"/>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title">Добро пожаловать на лекцию</h5>
+                      <div class="navbar-wrap">
+                          <ul class="nav nav-tabs" role="tablist">
+                              <li class="nav-item active">
+                                  <span class="nav-link active" id="tab-phone" data-toggle="tab">
+                                      <img style="width:24px;height:24px;" src='{% static "img/phone.png" %}'/>
+                                  </span>
+                              </li>
+                              <li>
+                                  <span class="nav-link" id="tab-list" data-toggle="tab">
+                                      <img style="width:24px;height:24px;" src='{% static "img/list.png" %}'/>
+                                  </span>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+                  <div class="modal-body">
+                      <p id="message">Введите ваш номер телефона:</p>
+                      <form id="phone">
+                          <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text" id="basic-addon1">+7</span>
+                          </div>
+                              <input type="text" class="form-control" placeholder="(123) 456-78-90" name="phone_number">
+                              <div class="invalid-feedback">
+                              </div>
+                          </div>
+                      </form>
+                      <form id="list">
+                          <div class="input-group mb-3">
+                              <select class="custom-select" name="username">
+                                  <option></option>
+                              </select>
+                              <div class="invalid-feedback">
+                              </div>
+                          </div>
+                      </form>
+                      <div id="success" class="d-flex justify-content-center" style="display:none!important;">
+                          <div class="svg-box">
+                                <svg class="circular green-stroke">
+                                    <circle class="path" cx="75" cy="75" r="50" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                                </svg>
+                                <svg class="checkmark green-stroke">
+                                    <g transform="matrix(0.79961,8.65821e-32,8.39584e-32,0.79961,-489.57,-205.679)">
+                                        <path class="checkmark__check" fill="none" d="M616.306,283.025L634.087,300.805L673.361,261.53"/>
+                                    </g>
+                                </svg>
+                          </div>
+                      </div>
+                      <div id="spinner" class="d-flex justify-content-center" style="display:none!important;">
+                          <div class="spinner-grow" role="status">
+                              <span class="sr-only">Пожайлуйста подождите...</span>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button id="submit" type="button" class="btn btn-primary">Применить</button>
+                  </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Лекция "{{lecture_name}}"</title>
+    {% csrf_token %}
+    <link href='{% static "css/bootstrap.min.css" %}' rel="stylesheet">
+    <link href='{% static "css/select2.min.css" %}' rel="stylesheet">
+    <link href='{% static "css/student_check.css" %}' rel="stylesheet">
+    <script type="text/javascript" src='{% static "js/jquery-3.4.1.min.js" %}'></script>
+    <script type="text/javascript" src='{% static "js/jquery.mask.js" %}'></script>
+    <script type="text/javascript" src='{% static "js/bootstrap.min.js" %}'></script>
+    <style>
+        .welcome {
+            justify-content: center!important;
+            text-align: center;
+            position: absolute;
+            padding-top:25%;
+        }
+    </style>
+</head>
+<body>
+<div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+        <div id="success-main" class="d-flex justify-content-center">
+            <div class="svg-box">
+                <svg class="circular green-stroke">
+                    <circle class="path" cx="75" cy="75" r="50" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                </svg>
+                <svg class="checkmark green-stroke">
+                    <g transform="matrix(0.79961,8.65821e-32,8.39584e-32,0.79961,-489.57,-205.679)">
+                        <path class="checkmark__check" fill="none" d="M616.306,283.025L634.087,300.805L673.361,261.53"/>
+                    </g>
+                </svg>
+            </div>
+        </div>
+        <div class="welcome">
+            <h1>Добро пожаловать на лекцию, {{ username }}</h1>
+            <form id="notme" action="notme" method="POST">
+                {% csrf_token %}
+                <a href="#" onclick="document.getElementById('notme').submit()">Я не {{ username }}</a>
+            </form>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

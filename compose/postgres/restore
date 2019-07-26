@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -o errexit
+set -o nounset
+
+export PGPASSWORD=${DATABASE_PASSWORD}
+
+BACKUP=/backups/$1
+
+if dropdb -h 127.0.0.1 -U ${DATABASE_USER} ${DATABASE_NAME}
+then echo "База данных \"${DATABASE_NAME}\" была удалена."
+else echo "Базы данных \"${DATABASE_NAME}\" не существует."
+fi
+
+echo "Создаем базу данных \"${DATABASE_NAME}\""
+createdb -h 127.0.0.1 -U ${DATABASE_USER} ${DATABASE_NAME} -O ${DATABASE_USER}
+
+echo "Производим востановление базы данных \"${DATABASE_NAME}\""
+gzip -d -c $BACKUP | psql -h 127.0.0.1 -U ${DATABASE_USER} ${DATABASE_NAME}
